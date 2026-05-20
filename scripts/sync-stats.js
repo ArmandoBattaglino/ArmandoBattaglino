@@ -632,6 +632,25 @@ async function collectCommitDates(repoRefs, label) {
   return out;
 }
 
+async function collectIssueAndPrDates(repoRefs, label) {
+  // The /issues endpoint returns BOTH issues and PRs (PRs are special issues
+  // in GitHub's data model). One contribution per item.
+  const since = new Date(Date.now() - 365 * 86400 * 1000).toISOString();
+  const out = [];
+  for (const fullName of repoRefs) {
+    try {
+      const items = await restAll(`/repos/${fullName}/issues?creator=${USER}&since=${since}&state=all`);
+      for (const it of items) {
+        if (it.created_at) out.push(new Date(it.created_at));
+      }
+      console.log(`  ${label}/${fullName}: ${items.length} issues+prs`);
+    } catch (e) {
+      console.warn(`  ${label}/${fullName}: issues+prs skipped (${e.message})`);
+    }
+  }
+  return out;
+}
+
 async function fetchContributionCalendar() {
   const data = await gql(`
     {
@@ -683,12 +702,14 @@ async function main() {
     .map((c) => c.repository.nameWithOwner);
   const privateRepoRefs = privateRepos.map((r) => `${USER}/${r.name}`);
 
-  console.log('— Private —');
+  console.log('— Private commits —');
   const privateDates = await collectCommitDates(privateRepoRefs, 'private');
-  console.log('— Public —');
+  console.log('— Public commits —');
   const publicDates = await collectCommitDates(publicRepoRefs, 'public');
+  console.log('— Private issues+PRs —');
+  const privateIssuePrDates = await collectIssueAndPrDates(privateRepoRefs, 'private');
 
-  console.log(`\nSummary: public ${publicDates.length} (api total ${publicCommitsTotal}) · private ${privateDates.length}`);
+  console.log(`\nSummary: public ${publicDates.length} (api total ${publicCommitsTotal}) · private commits ${privateDates.length} · private issues+prs ${privateIssuePrDates.length}`);
 
   const PUBLIC_THEME = {
     id: 'pub',
@@ -708,17 +729,17 @@ async function main() {
   };
 
   // Daily counts: GitHub's public contribution calendar (commits + PRs + issues + reviews)
-  // PLUS private commits we enumerate ourselves. This gets us the closest possible
-  // match to what shows on the user's own profile graph.
+  // PLUS private commits + private issues/PRs we enumerate ourselves.
+  // Gets us the closest possible match to what shows on the user's own profile graph.
   const { counts: calCounts, total: calTotal } = await fetchContributionCalendar();
   const combinedCounts = { ...calCounts };
-  for (const d of privateDates) {
+  for (const d of [...privateDates, ...privateIssuePrDates]) {
     const key = localDateKey(d);
     combinedCounts[key] = (combinedCounts[key] || 0) + 1;
   }
   let combinedTotal = 0;
   for (const v of Object.values(combinedCounts)) combinedTotal += v;
-  console.log(`Combined daily total: ${combinedTotal} (public contribs ${calTotal} + private commits ${privateDates.length})`);
+  console.log(`Combined daily total: ${combinedTotal} (public ${calTotal} + private commits ${privateDates.length} + private issues/prs ${privateIssuePrDates.length})`);
   const dailyGrindSvg = buildDailyGrindSvg(combinedCounts);
   const buildingPublicSvg = buildPublicSvg(allRepos, publicCommitsTotal);
   const buildingPrivateSvg = buildPrivateSvg(privateDates.length, publicCommitsTotal);
