@@ -1,9 +1,10 @@
-// Fetches public repo list + private commit counts and rewrites two ASCII
-// panels in README.md between marker comments.
+// Generates assets/building-public.svg and assets/building-private.svg
+// from live GitHub data, matching the mission-control look of the header.
 // Requires env PROFILE_TOKEN (PAT with `repo` scope).
 // Usage: node scripts/sync-stats.js
 
 const fs = require('fs');
+const path = require('path');
 
 const TOKEN = process.env.PROFILE_TOKEN;
 const USER = 'ArmandoBattaglino';
@@ -20,16 +21,9 @@ const headers = {
   'User-Agent': 'profile-sync-stats',
 };
 
-async function rest(path) {
-  const url = `https://api.github.com${path}`;
-  const res = await fetch(url, { headers });
-  if (!res.ok) throw new Error(`REST ${path} → ${res.status}`);
-  return res.json();
-}
-
-async function restAll(path) {
+async function restAll(pathStr) {
   const out = [];
-  let url = `https://api.github.com${path}${path.includes('?') ? '&' : '?'}per_page=100`;
+  let url = `https://api.github.com${pathStr}${pathStr.includes('?') ? '&' : '?'}per_page=100`;
   while (url) {
     const res = await fetch(url, { headers });
     if (!res.ok) throw new Error(`REST ${url} → ${res.status}`);
@@ -65,92 +59,138 @@ function humanize(iso) {
   return `${Math.floor(diff / (86400 * 365))}y ago`;
 }
 
-function pad(s, n) {
+function escape(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function truncate(s, n) {
   s = String(s);
-  if (s.length > n) return s.slice(0, n - 1) + '…';
-  return s + ' '.repeat(n - s.length);
+  return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
-function padR(s, n) {
-  s = String(s);
-  if (s.length > n) return s.slice(0, n - 1) + '…';
-  return ' '.repeat(n - s.length) + s;
+function buildPublicSvg(repos, publicCommits) {
+  const visible = repos.filter((r) => !r.private && !r.fork).slice(0, 8);
+  const ROW_H = 30;
+  const TOP_H = 70;
+  const BOT_H = 60;
+  const W = 880;
+  const H = TOP_H + visible.length * ROW_H + BOT_H;
+
+  const rows = visible
+    .map((r, i) => {
+      const y = TOP_H + 20 + i * ROW_H;
+      const name = escape(truncate(r.name, 30));
+      const lang = escape((r.language || '—').toLowerCase());
+      const stars = r.stargazers_count || 0;
+      const updated = escape(humanize(r.pushed_at));
+      return `
+    <g>
+      <text x="32" y="${y}" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="60" y="${y}" fill="#e6edf3" font-size="14">${name}</text>
+      <text x="430" y="${y}" fill="#7d8590" font-size="13">${lang}</text>
+      <text x="640" y="${y}" fill="#7d8590" font-size="13">★ ${stars}</text>
+      <text x="720" y="${y}" fill="#7d8590" font-size="13">↻ ${updated}</text>
+    </g>`;
+    })
+    .join('');
+
+  const publicCount = repos.filter((r) => !r.private && !r.fork).length;
+  const today = new Date().toISOString().split('T')[0];
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Courier New', 'SF Mono', Consolas, monospace">
+  <defs>
+    <pattern id="sl-pub" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
+    </pattern>
+    <linearGradient id="hdr-pub" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d2818"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
+  <rect width="${W}" height="${H}" rx="8" fill="url(#sl-pub)"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#1f3a2a" stroke-width="1"/>
+
+  <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-pub)"/>
+  <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
+
+  <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// BUILDING IN PUBLIC</text>
+  <circle cx="${W - 70}" cy="24" r="3" fill="#00ff66">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+  <text x="${W - 20}" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE</text>
+
+  <text x="32" y="62" fill="#6e7681" font-size="10" letter-spacing="1">REPO</text>
+  <text x="430" y="62" fill="#6e7681" font-size="10" letter-spacing="1">LANG</text>
+  <text x="640" y="62" fill="#6e7681" font-size="10" letter-spacing="1">★</text>
+  <text x="720" y="62" fill="#6e7681" font-size="10" letter-spacing="1">UPDATED</text>
+  <line x1="20" y1="70" x2="${W - 20}" y2="70" stroke="#21262d" stroke-width="0.5"/>
+  ${rows}
+
+  <line x1="20" y1="${H - 50}" x2="${W - 20}" y2="${H - 50}" stroke="#21262d" stroke-width="0.5"/>
+  <text x="20" y="${H - 24}" fill="#7d8590" font-size="11">${publicCount} public repos · ${publicCommits} commits this year</text>
+  <text x="${W - 20}" y="${H - 24}" fill="#6e7681" font-size="11" text-anchor="end">↻ ${today}</text>
+</svg>
+`;
 }
 
-// Build a fixed-width ASCII panel
-function panel(title, lines, width) {
-  const inner = width - 2;
-  const top = '╔' + '═'.repeat(inner) + '╗';
-  const sep = '╠' + '═'.repeat(inner) + '╣';
-  const bot = '╚' + '═'.repeat(inner) + '╝';
-  const wrap = (s) => '║' + pad(s, inner) + '║';
-  return [
-    top,
-    wrap(`  // ${title}`),
-    sep,
-    wrap(''),
-    ...lines.map(wrap),
-    wrap(''),
-    bot,
-  ].join('\n');
-}
-
-function buildPublicPanel(repos, totalPublicCommits) {
-  const PUBLIC_WIDTH = 80;
-
-  // sort by pushed_at desc, take top 8
-  const top = repos
-    .filter((r) => !r.fork && !r.private)
-    .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
-    .slice(0, 8);
-
-  const rows = top.map((r) => {
-    const name = pad(r.name, 24);
-    const lang = pad((r.language || '—').toLowerCase(), 12);
-    const stars = padR(`★ ${r.stargazers_count}`, 6);
-    const updated = pad(`↻ ${humanize(r.pushed_at)}`, 16);
-    return `  >>  ${name} ${lang} ${stars}   ${updated}`;
-  });
-
-  const footer = [
-    '',
-    `  ${repos.filter((r) => !r.private && !r.fork).length} public repos · ${totalPublicCommits} commits this year`,
-  ];
-
-  return panel('BUILDING IN PUBLIC', [...rows, ...footer], PUBLIC_WIDTH);
-}
-
-function buildPrivatePanel(privateCount, publicCount) {
-  const PRIVATE_WIDTH = 44;
+function buildPrivateSvg(privateCount, publicCount) {
+  const W = 440;
+  const H = 380;
   const total = privateCount + publicCount;
-  const ratio = total > 0 ? privateCount / total : 0;
-  const pct = Math.round(ratio * 100);
-  const barWidth = 26;
-  const filled = Math.round(ratio * barWidth);
-  const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
+  const pct = total > 0 ? Math.round((privateCount / total) * 100) : 0;
+  const barWidth = 360;
+  const filled = total > 0 ? Math.round((privateCount / total) * barWidth) : 0;
   const num = privateCount.toLocaleString('en-US');
 
-  const lines = [
-    '',
-    `         ${bar}`,
-    '',
-    `              ${padR(num, 8)}`,
-    `         commits this year`,
-    '',
-    `              ${padR(pct + '%', 4)} of total`,
-    '',
-    `  what's brewing stays hidden`,
-    `  until it's ready to ship.`,
-  ];
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Courier New', 'SF Mono', Consolas, monospace">
+  <defs>
+    <pattern id="sl-priv" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
+    </pattern>
+    <linearGradient id="hdr-priv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2a1a0a"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <filter id="redact-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+  <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
+  <rect width="${W}" height="${H}" rx="8" fill="url(#sl-priv)"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#3d2a1a" stroke-width="1"/>
 
-  return panel('BUILDING IN PRIVATE', lines, PRIVATE_WIDTH);
+  <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-priv)"/>
+  <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#ffb000" stroke-width="0.6" opacity="0.55"/>
+
+  <text x="20" y="28" fill="#ffb000" font-size="13" letter-spacing="2">// BUILDING IN PRIVATE</text>
+  <text x="${W - 20}" y="28" fill="#ffb000" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">[CLASSIFIED]</text>
+
+  <text x="${W / 2}" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">${num}</text>
+  <text x="${W / 2}" y="188" font-size="11" fill="#7d8590" text-anchor="middle" letter-spacing="2">COMMITS · LAST 365 DAYS</text>
+
+  <text x="40" y="240" fill="#6e7681" font-size="10" letter-spacing="1">PRIVATE / TOTAL</text>
+  <text x="${W - 40}" y="240" fill="#ffb000" font-size="11" text-anchor="end" letter-spacing="1">${pct}%</text>
+  <rect x="40" y="250" width="${barWidth}" height="6" rx="3" fill="#161b22"/>
+  <rect x="40" y="250" width="${filled}" height="6" rx="3" fill="#ffb000" opacity="0.85"/>
+
+  <text x="${W / 2}" y="310" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">what's brewing stays hidden</text>
+  <text x="${W / 2}" y="330" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">until it's ready to ship.</text>
+
+  <text x="${W / 2}" y="358" font-size="9" fill="#484f58" text-anchor="middle" letter-spacing="3">▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮ ▮</text>
+</svg>
+`;
 }
 
 async function main() {
-  // Authenticated user's repos (includes private ones owned by user)
+  // Authenticated user's repos (public + private owned)
   const allRepos = await restAll(`/user/repos?affiliation=owner&sort=pushed&direction=desc`);
-
-  // Get private repos
   const privateRepos = allRepos.filter((r) => r.private && !r.fork);
 
   // Count commits by user in each private repo over the last year
@@ -170,9 +210,7 @@ async function main() {
   const publicData = await gql(
     `query($login: String!) {
       user(login: $login) {
-        contributionsCollection {
-          totalCommitContributions
-        }
+        contributionsCollection { totalCommitContributions }
       }
     }`,
     { login: USER }
@@ -181,25 +219,15 @@ async function main() {
 
   console.log(`Public commits: ${publicCommits}, Private commits: ${privateCommits}`);
 
-  // Build panels
-  const publicPanel = buildPublicPanel(allRepos, publicCommits);
-  const privatePanel = buildPrivatePanel(privateCommits, publicCommits);
+  // Build SVGs
+  const publicSvg = buildPublicSvg(allRepos, publicCommits);
+  const privateSvg = buildPrivateSvg(privateCommits, publicCommits);
 
-  // Replace in README between markers
-  let readme = fs.readFileSync('README.md', 'utf8');
-  const wrapBlock = (panelStr) => `\n\n<pre>\n${panelStr}\n</pre>\n\n`;
+  fs.mkdirSync('assets', { recursive: true });
+  fs.writeFileSync(path.join('assets', 'building-public.svg'), publicSvg);
+  fs.writeFileSync(path.join('assets', 'building-private.svg'), privateSvg);
 
-  readme = readme.replace(
-    /<!-- PUBLIC_START -->[\s\S]*?<!-- PUBLIC_END -->/,
-    `<!-- PUBLIC_START -->${wrapBlock(publicPanel)}<!-- PUBLIC_END -->`
-  );
-  readme = readme.replace(
-    /<!-- PRIVATE_START -->[\s\S]*?<!-- PRIVATE_END -->/,
-    `<!-- PRIVATE_START -->${wrapBlock(privatePanel)}<!-- PRIVATE_END -->`
-  );
-
-  fs.writeFileSync('README.md', readme);
-  console.log('README.md updated.');
+  console.log('Wrote assets/building-public.svg and assets/building-private.svg');
 }
 
 main().catch((e) => {
