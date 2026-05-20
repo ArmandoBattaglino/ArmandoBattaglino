@@ -8,7 +8,7 @@
 
 <div align="center">
 
-<img src="./assets/daily-grind.svg" alt="Daily Grind — beat yesterday" width="100%" />
+<img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/daily-grind.svg" alt="Daily Grind — beat yesterday" width="100%" />
 
 </div>
 
@@ -16,7 +16,7 @@
 
 <div align="center">
 
-<img src="./assets/building-public.svg" alt="Building in public" width="100%" />
+<img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/building-public.svg" alt="Building in public" width="100%" />
 
 </div>
 
@@ -24,7 +24,7 @@
   <summary><sub><code>// ▸ expand public telemetry</code></sub></summary>
   <br/>
   <div align="center">
-    <img src="./assets/telemetry-public.svg" alt="Public telemetry" width="100%" />
+    <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/telemetry-public.svg" alt="Public telemetry" width="100%" />
   </div>
 </details>
 
@@ -32,7 +32,7 @@
 
 <div align="center">
 
-<img src="./assets/building-private.svg" alt="Building in private" />
+<img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/building-private.svg" alt="Building in private" />
 
 </div>
 
@@ -40,7 +40,7 @@
   <summary><sub><code>// ▸ expand private telemetry</code></sub></summary>
   <br/>
   <div align="center">
-    <img src="./assets/telemetry-private.svg" alt="Private telemetry" width="100%" />
+    <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/telemetry-private.svg" alt="Private telemetry" width="100%" />
   </div>
 </details>
 
