@@ -1,8 +1,11 @@
 name: Sync Stats Panels
 
 on:
+  # Two parallel schedules with offset — GitHub deprioritizes high-frequency
+  # cron jobs under load, so doubling up gives better odds at least one fires.
   schedule:
     - cron: "*/5 * * * *"
+    - cron: "2-57/5 * * * *"
   workflow_dispatch:
   push:
     branches:
