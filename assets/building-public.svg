@@ -4,23 +4,23 @@
       <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
     </pattern>
     <linearGradient id="hdr-pub" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0d2818"/>
+      <stop offset="0%" stop-color="#161b22"/>
       <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
   </defs>
   <rect width="880" height="370" rx="8" fill="#0d1117"/>
   <rect width="880" height="370" rx="8" fill="url(#sl-pub)"/>
-  <rect x="0.5" y="0.5" width="879" height="369" rx="8" fill="none" stroke="#1f3a2a" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="879" height="369" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
 
   <rect x="0" y="0" width="880" height="44" rx="8" fill="url(#hdr-pub)"/>
   <rect x="0" y="38" width="880" height="6" fill="#0d1117"/>
-  <line x1="0" y1="44" x2="880" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
+  <line x1="0" y1="44" x2="880" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.55"/>
 
-  <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// BUILDING IN PUBLIC</text>
-  <circle cx="810" cy="24" r="3" fill="#00ff66">
+  <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// BUILDING IN PUBLIC</text>
+  <circle cx="810" cy="24" r="3" fill="#e6edf3">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="860" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE</text>
+  <text x="860" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE</text>
 
   <text x="32" y="62" fill="#6e7681" font-size="10" letter-spacing="1">REPO</text>
   <text x="430" y="62" fill="#6e7681" font-size="10" letter-spacing="1">LANG</text>
@@ -29,56 +29,56 @@
   <line x1="20" y1="70" x2="860" y2="70" stroke="#21262d" stroke-width="0.5"/>
   
     <g>
-      <text x="32" y="90" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="90" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="90" fill="#e6edf3" font-size="14">ArmandoBattaglino</text>
       <text x="430" y="90" fill="#7d8590" font-size="13">javascript</text>
       <text x="640" y="90" fill="#7d8590" font-size="13">★ 0</text>
-      <text x="720" y="90" fill="#7d8590" font-size="13">↻ 9m ago</text>
+      <text x="720" y="90" fill="#7d8590" font-size="13">↻ 7m ago</text>
     </g>
     <g>
-      <text x="32" y="120" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="120" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="120" fill="#e6edf3" font-size="14">HandControl</text>
       <text x="430" y="120" fill="#7d8590" font-size="13">typescript</text>
       <text x="640" y="120" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="120" fill="#7d8590" font-size="13">↻ 2w ago</text>
     </g>
     <g>
-      <text x="32" y="150" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="150" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="150" fill="#e6edf3" font-size="14">Harness-Maker</text>
       <text x="430" y="150" fill="#7d8590" font-size="13">javascript</text>
       <text x="640" y="150" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="150" fill="#7d8590" font-size="13">↻ 1mo ago</text>
     </g>
     <g>
-      <text x="32" y="180" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="180" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="180" fill="#e6edf3" font-size="14">Data-Engineering-Ecommerce</text>
       <text x="430" y="180" fill="#7d8590" font-size="13">—</text>
       <text x="640" y="180" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="180" fill="#7d8590" font-size="13">↻ 1y ago</text>
     </g>
     <g>
-      <text x="32" y="210" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="210" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="210" fill="#e6edf3" font-size="14">EPICODE</text>
       <text x="430" y="210" fill="#7d8590" font-size="13">c</text>
       <text x="640" y="210" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="210" fill="#7d8590" font-size="13">↻ 3y ago</text>
     </g>
     <g>
-      <text x="32" y="240" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="240" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="240" fill="#e6edf3" font-size="14">Random-Combination</text>
       <text x="430" y="240" fill="#7d8590" font-size="13">python</text>
       <text x="640" y="240" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="240" fill="#7d8590" font-size="13">↻ 3y ago</text>
     </g>
     <g>
-      <text x="32" y="270" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="270" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="270" fill="#e6edf3" font-size="14">Pokedex</text>
       <text x="430" y="270" fill="#7d8590" font-size="13">css</text>
       <text x="640" y="270" fill="#7d8590" font-size="13">★ 0</text>
       <text x="720" y="270" fill="#7d8590" font-size="13">↻ 4y ago</text>
     </g>
     <g>
-      <text x="32" y="300" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="300" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="300" fill="#e6edf3" font-size="14">Meteo-API</text>
       <text x="430" y="300" fill="#7d8590" font-size="13">javascript</text>
       <text x="640" y="300" fill="#7d8590" font-size="13">★ 0</text>
@@ -86,6 +86,6 @@
     </g>
 
   <line x1="20" y1="320" x2="860" y2="320" stroke="#21262d" stroke-width="0.5"/>
-  <text x="20" y="346" fill="#7d8590" font-size="11">8 public repos · 697 commits this year</text>
+  <text x="20" y="346" fill="#7d8590" font-size="11">8 public repos · 698 commits this year</text>
   <text x="860" y="346" fill="#6e7681" font-size="11" text-anchor="end">↻ 2026-05-20</text>
 </svg>

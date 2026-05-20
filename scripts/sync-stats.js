@@ -178,18 +178,18 @@ function buildDailyGrindSvg(counts) {
     last90.push(counts[key] || 0);
   }
 
-  // Delta visuals
+  // Delta visuals — monochrome: brightness = how good you're doing
   let deltaColor, deltaSymbol, deltaLabel;
   if (delta > 0) {
-    deltaColor = '#00ff66';
+    deltaColor = '#ffffff';
     deltaSymbol = '↑';
     deltaLabel = `+${delta} ahead`;
   } else if (delta < 0) {
-    deltaColor = '#ff6b6b';
+    deltaColor = '#6e7681';
     deltaSymbol = '↓';
     deltaLabel = `${delta} behind`;
   } else {
-    deltaColor = '#ffb000';
+    deltaColor = '#7d8590';
     deltaSymbol = '=';
     deltaLabel = 'even';
   }
@@ -198,12 +198,12 @@ function buildDailyGrindSvg(counts) {
   const pct = bestCount > 0 ? Math.round((todayCount / bestCount) * 100) : 0;
   const isNewPeak = todayCount > 0 && todayCount > bestCount;
   const isPeakTied = todayCount > 0 && todayCount === bestCount;
-  const progressColor = isNewPeak || isPeakTied ? '#00ff66' : '#ffb000';
+  const progressColor = isNewPeak || isPeakTied ? '#ffffff' : '#e6edf3';
   const progressLabel = isNewPeak ? 'NEW PEAK ★' : isPeakTied ? 'PEAK TIED' : `${todayCount} / ${bestCount} = ${pct}%`;
 
   // Streak label
   const streakLabel = streak === 0 ? 'broken' : streak === 1 ? 'day · alive' : 'days · alive';
-  const streakColor = streak > 0 ? '#00ff66' : '#6e7681';
+  const streakColor = streak > 0 ? '#ffffff' : '#6e7681';
 
   // Three-column geometry
   const colW = (W - PAD * 2) / 3;
@@ -216,13 +216,13 @@ function buildDailyGrindSvg(counts) {
   const header = `
   <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-grind)"/>
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
-  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
-  <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// DAILY GRIND</text>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.55"/>
+  <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// DAILY GRIND</text>
   <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">public contributions + private commits</text>
-  <circle cx="${W - 140}" cy="24" r="3" fill="#00ff66">
+  <circle cx="${W - 140}" cy="24" r="3" fill="#e6edf3">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="${W - 20}" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · /15min · beat yesterday</text>`;
+  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · /15min · beat yesterday</text>`;
   y = 44;
 
   // Row 1: TODAY | YESTERDAY | DELTA
@@ -255,7 +255,7 @@ function buildDailyGrindSvg(counts) {
   <text x="${col1X}" y="${row2Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">${streakLabel.toUpperCase()}</text>
 
   <text x="${col2X}" y="${row2Y + labelOffset}" fill="#6e7681" font-size="10" letter-spacing="2">BEST DAY · 365D</text>
-  <text x="${col2X}" y="${row2Y + numOffset}" fill="#ffb000" font-size="44" font-weight="700">${bestCount}</text>
+  <text x="${col2X}" y="${row2Y + numOffset}" fill="#e6edf3" font-size="44" font-weight="700">${bestCount}</text>
   <text x="${col2X}" y="${row2Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">ON ${shortDate(bestDateKey).toUpperCase()}</text>
 
   <text x="${col3X}" y="${row2Y + labelOffset}" fill="#6e7681" font-size="10" letter-spacing="2">TARGET TO BEAT</text>
@@ -284,7 +284,7 @@ function buildDailyGrindSvg(counts) {
       const x = sparkX + i * (sparkBarW + sparkGap);
       const yy = sparkY + sparkH - h;
       const isToday = i === 89;
-      const fill = isToday ? '#ffffff' : '#00ff66';
+      const fill = isToday ? '#ffffff' : '#e6edf3';
       const op = isToday ? 1 : (0.3 + (c / maxDaily) * 0.6).toFixed(2);
       return `<rect x="${x}" y="${yy}" width="${sparkBarW}" height="${h}" rx="1" fill="${fill}" opacity="${op}"/>`;
     })
@@ -306,13 +306,13 @@ function buildDailyGrindSvg(counts) {
       <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
     </pattern>
     <linearGradient id="hdr-grind" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0d2818"/>
+      <stop offset="0%" stop-color="#161b22"/>
       <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
   </defs>
   <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
   <rect width="${W}" height="${H}" rx="8" fill="url(#sl-grind)"/>
-  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#1f3a2a" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
   ${header}
   ${row1}
   ${div1}
@@ -342,7 +342,7 @@ function buildPublicSvg(repos, publicCommits) {
       const updated = escape(humanize(r.pushed_at));
       return `
     <g>
-      <text x="32" y="${y}" fill="#00ff66" font-size="14" opacity="0.7">&gt;&gt;</text>
+      <text x="32" y="${y}" fill="#e6edf3" font-size="14" opacity="0.7">&gt;&gt;</text>
       <text x="60" y="${y}" fill="#e6edf3" font-size="14">${name}</text>
       <text x="430" y="${y}" fill="#7d8590" font-size="13">${lang}</text>
       <text x="640" y="${y}" fill="#7d8590" font-size="13">★ ${stars}</text>
@@ -360,23 +360,23 @@ function buildPublicSvg(repos, publicCommits) {
       <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
     </pattern>
     <linearGradient id="hdr-pub" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0d2818"/>
+      <stop offset="0%" stop-color="#161b22"/>
       <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
   </defs>
   <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
   <rect width="${W}" height="${H}" rx="8" fill="url(#sl-pub)"/>
-  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#1f3a2a" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
 
   <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-pub)"/>
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
-  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.55"/>
 
-  <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// BUILDING IN PUBLIC</text>
-  <circle cx="${W - 70}" cy="24" r="3" fill="#00ff66">
+  <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// BUILDING IN PUBLIC</text>
+  <circle cx="${W - 70}" cy="24" r="3" fill="#e6edf3">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="${W - 20}" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE</text>
+  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE</text>
 
   <text x="32" y="62" fill="#6e7681" font-size="10" letter-spacing="1">REPO</text>
   <text x="430" y="62" fill="#6e7681" font-size="10" letter-spacing="1">LANG</text>
@@ -407,27 +407,27 @@ function buildPrivateSvg(privateCount, publicCount) {
       <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
     </pattern>
     <linearGradient id="hdr-priv" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#2a1a0a"/>
+      <stop offset="0%" stop-color="#161b22"/>
       <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
   </defs>
   <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
   <rect width="${W}" height="${H}" rx="8" fill="url(#sl-priv)"/>
-  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#3d2a1a" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
 
   <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-priv)"/>
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
-  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#ffb000" stroke-width="0.6" opacity="0.55"/>
-  <text x="20" y="28" fill="#ffb000" font-size="13" letter-spacing="2">// BUILDING IN PRIVATE</text>
-  <text x="${W - 20}" y="28" fill="#ffb000" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">[CLASSIFIED]</text>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.55"/>
+  <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// BUILDING IN PRIVATE</text>
+  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">[CLASSIFIED]</text>
 
   <text x="${W / 2}" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">${num}</text>
   <text x="${W / 2}" y="188" font-size="11" fill="#7d8590" text-anchor="middle" letter-spacing="2">COMMITS · LAST 365 DAYS</text>
 
   <text x="28" y="240" fill="#6e7681" font-size="10" letter-spacing="2">PRIVATE / TOTAL</text>
-  <text x="${W - 28}" y="240" fill="#ffb000" font-size="11" text-anchor="end" letter-spacing="1">${pct}%</text>
+  <text x="${W - 28}" y="240" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1">${pct}%</text>
   <rect x="28" y="250" width="${barWidth}" height="6" rx="3" fill="#161b22"/>
-  <rect x="28" y="250" width="${filled}" height="6" rx="3" fill="#ffb000" opacity="0.85"/>
+  <rect x="28" y="250" width="${filled}" height="6" rx="3" fill="#e6edf3" opacity="0.85"/>
 
   <text x="${W / 2}" y="310" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">what's brewing stays hidden</text>
   <text x="${W / 2}" y="330" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">until it's ready to ship.</text>
@@ -713,17 +713,17 @@ async function main() {
 
   const PUBLIC_THEME = {
     id: 'pub',
-    accent: '#00ff66',
-    border: '#1f3a2a',
-    gradStart: '#0d2818',
+    accent: '#e6edf3',
+    border: '#21262d',
+    gradStart: '#161b22',
     label: 'PUBLIC',
     tag: '[OPEN]',
   };
   const PRIVATE_THEME = {
     id: 'priv',
-    accent: '#ffb000',
-    border: '#3d2a1a',
-    gradStart: '#2a1a0a',
+    accent: '#e6edf3',
+    border: '#21262d',
+    gradStart: '#161b22',
     label: 'PRIVATE',
     tag: '[CLASSIFIED]',
   };
