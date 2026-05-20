@@ -206,7 +206,7 @@ const armando: Developer = {
     <img src="./profile-3d-contrib/profile-night-view.svg" />
     <img src="./profile-3d-contrib/profile-gitblock.svg" />
     <img src="./profile-3d-contrib/profile-green-animate.svg" />
-    <img src="./profile-3d-contrib/profile-3d-contrib.svg" />
+    <img src="./profile-3d-contrib/profile-season-animate.svg" />
   </div>
 </details>
 
