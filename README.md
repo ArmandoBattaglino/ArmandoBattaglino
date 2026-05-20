@@ -7,41 +7,44 @@
 <br/>
 <br/>
 
-## 01 &nbsp;—&nbsp; about
+## I. &nbsp; origin
 
-Italian builder working at the intersection of AI, voice, and human–computer interaction. I make tools that run offline and respect what they touch. I believe the next decade belongs to interfaces that disappear.
-
-<br/>
-
-## 02 &nbsp;—&nbsp; building
-
-- **Harness-Maker** &nbsp; — &nbsp; toolkit for composing agent harnesses
-- **GIGI** &nbsp; — &nbsp; native AI voice assistant for the Apple ecosystem
-- **HandControl** &nbsp; — &nbsp; webcam gestures + IT/EN voice dictation for Windows, fully offline
+> italian.  
+> i build small machines that listen.  
+> the good ones know when to disappear.  
+> the rest is a question pretending to be a tool.
 
 <br/>
 
-## 03 &nbsp;—&nbsp; stack
+## II. &nbsp; opus
 
-`TypeScript` &nbsp; `Swift` &nbsp; `JavaScript` &nbsp; `Python` &nbsp; `Electron` &nbsp; `MediaPipe` &nbsp; `Whisper`
+> **harness-maker** &nbsp;—&nbsp; a frame for things that think on your behalf.  
+> **gigi** &nbsp;—&nbsp; a voice that doesn't phone home.  
+> **handcontrol** &nbsp;—&nbsp; touch the air. speak in the dark. nothing leaves the room.
 
 <br/>
 
-## 04 &nbsp;—&nbsp; contributions
+## III. &nbsp; instruments
+
+`typescript` &nbsp; `swift` &nbsp; `javascript` &nbsp; `python` &nbsp; `electron` &nbsp; `mediapipe` &nbsp; `whisper`
+
+<br/>
+
+## IV. &nbsp; traces
 
 <div align="center">
 
-<img src="./profile-3d-contrib/profile-gitblock.svg" alt="contribution calendar" width="100%" />
+<img src="./profile-3d-contrib/profile-gitblock.svg" alt="one year, in towers" width="100%" />
 
 <br/>
 
-<sub><i>one year. one block per day. taller = more shipped.</i></sub>
+<sub><i>one year. one tower per day. taller means louder.</i></sub>
 
 </div>
 
 <br/>
 
-## 05 &nbsp;—&nbsp; numbers
+## V. &nbsp; pulse
 
 <div align="center">
 
@@ -51,17 +54,25 @@ Italian builder working at the intersection of AI, voice, and human–computer i
 
 <br/>
 
-## 06 &nbsp;—&nbsp; reach
+## VI. &nbsp; elsewhere
 
-- [github.com/ArmandoBattaglino](https://github.com/ArmandoBattaglino)
-- [linkedin.com/in/armando-battaglino](https://www.linkedin.com/in/armando-battaglino-7743ab295)
-- [efactorygroupsrl@gmail.com](mailto:efactorygroupsrl@gmail.com)
+> if you find this page, you can find me too.  
+>  
+> &nbsp; &nbsp; → &nbsp; [github](https://github.com/ArmandoBattaglino)  
+> &nbsp; &nbsp; → &nbsp; [linkedin](https://www.linkedin.com/in/armando-battaglino-7743ab295)  
+> &nbsp; &nbsp; → &nbsp; [a letter, if you must](mailto:efactorygroupsrl@gmail.com)
 
+<br/>
 <br/>
 <br/>
 
 <div align="center">
 
-<sub>—</sub>
+<sub><i>—</i></sub>
+
+<br/>
+<br/>
+
+<sub>the work is finished when no one notices.</sub>
 
 </div>
