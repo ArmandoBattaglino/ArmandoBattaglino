@@ -12,6 +12,14 @@
 
 </div>
 
+<details>
+  <summary><sub><code>// ▸ expand public telemetry</code></sub></summary>
+  <br/>
+  <div align="center">
+    <img src="./assets/telemetry-public.svg" alt="Public telemetry" width="100%" />
+  </div>
+</details>
+
 <br/>
 
 <div align="center">
@@ -19,6 +27,14 @@
 <img src="./assets/building-private.svg" alt="Building in private" />
 
 </div>
+
+<details>
+  <summary><sub><code>// ▸ expand private telemetry</code></sub></summary>
+  <br/>
+  <div align="center">
+    <img src="./assets/telemetry-private.svg" alt="Private telemetry" width="100%" />
+  </div>
+</details>
 
 <br/>
 
