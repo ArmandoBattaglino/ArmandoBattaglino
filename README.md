@@ -22,24 +22,6 @@
 
 <br/>
 
-<div align="center">
-
-<sub>// CONTRIBUTION TELEMETRY · last 365 sols · taller tower = louder day</sub>
-
-<img src="./profile-3d-contrib/profile-gitblock.svg" alt="contribution telemetry" width="100%" />
-
-</div>
-
-<br/>
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=ArmandoBattaglino&show_icons=true&hide_border=true&bg_color=00000000&title_color=00ff66&text_color=c9d1d9&icon_color=00ff66&ring_color=00ff66&count_private=true&include_all_commits=true&hide_rank=true&hide=contribs" width="500" />
-
-</div>
-
-<br/>
-
 ### `// CHANNELS`
 
 | node | channel  | endpoint                                                                                       |
