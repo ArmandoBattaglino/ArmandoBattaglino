@@ -130,16 +130,11 @@ function shortDate(iso) {
   return `${months[m - 1]} ${String(d).padStart(2, '0')}`;
 }
 
-function buildDailyGrindSvg(allDates) {
+function buildDailyGrindSvg(counts) {
   const W = 880;
   const PAD = 36;
-
-  // Daily counts in local timezone
-  const counts = {};
-  for (const d of allDates) {
-    const key = localDateKey(d);
-    counts[key] = (counts[key] || 0) + 1;
-  }
+  // `counts` is a map { "YYYY-MM-DD": N } sourced from GitHub's contributionCalendar
+  // so the numbers match what's shown on the user's profile graph 1:1.
 
   const now = new Date();
   const todayKey = localDateKey(now);
@@ -221,7 +216,7 @@ function buildDailyGrindSvg(allDates) {
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
   <line x1="0" y1="44" x2="${W}" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
   <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// DAILY GRIND</text>
-  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">commits only · github counts more</text>
+  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">matches your github profile graph · 1:1</text>
   <circle cx="${W - 140}" cy="24" r="3" fill="#00ff66">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
@@ -236,11 +231,11 @@ function buildDailyGrindSvg(allDates) {
   const row1 = `
   <text x="${col1X}" y="${row1Y + labelOffset}" fill="#6e7681" font-size="10" letter-spacing="2">TODAY</text>
   <text x="${col1X}" y="${row1Y + numOffset}" fill="#ffffff" font-size="44" font-weight="700">${todayCount}</text>
-  <text x="${col1X}" y="${row1Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">COMMITS</text>
+  <text x="${col1X}" y="${row1Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">CONTRIBUTIONS</text>
 
   <text x="${col2X}" y="${row1Y + labelOffset}" fill="#6e7681" font-size="10" letter-spacing="2">YESTERDAY</text>
   <text x="${col2X}" y="${row1Y + numOffset}" fill="#7d8590" font-size="44" font-weight="700">${yesterdayCount}</text>
-  <text x="${col2X}" y="${row1Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">COMMITS</text>
+  <text x="${col2X}" y="${row1Y + subOffset}" fill="#7d8590" font-size="10" letter-spacing="2">CONTRIBUTIONS</text>
 
   <text x="${col3X}" y="${row1Y + labelOffset}" fill="#6e7681" font-size="10" letter-spacing="2">DELTA</text>
   <text x="${col3X}" y="${row1Y + numOffset}" fill="${deltaColor}" font-size="36" font-weight="700">${deltaSymbol} ${deltaLabel}</text>`;
@@ -635,6 +630,34 @@ async function collectCommitDates(repoRefs, label) {
   return out;
 }
 
+async function fetchContributionCalendar() {
+  const data = await gql(`
+    {
+      viewer {
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+              }
+            }
+          }
+        }
+      }
+    }
+  `);
+  const cal = data.viewer.contributionsCollection.contributionCalendar;
+  const counts = {};
+  for (const week of cal.weeks) {
+    for (const day of week.contributionDays) {
+      counts[day.date] = day.contributionCount;
+    }
+  }
+  return { counts, total: cal.totalContributions };
+}
+
 async function main() {
   const allRepos = await restAll(`/user/repos?affiliation=owner&sort=pushed&direction=desc`);
   const privateRepos = allRepos.filter((r) => r.private && !r.fork);
@@ -682,9 +705,11 @@ async function main() {
     tag: '[CLASSIFIED]',
   };
 
-  const allDates = [...publicDates, ...privateDates];
+  // Daily contribution counts that match GitHub's profile graph exactly
+  const { counts: contribCounts, total: contribTotal } = await fetchContributionCalendar();
+  console.log(`Contribution calendar total (matches profile graph): ${contribTotal}`);
 
-  const dailyGrindSvg = buildDailyGrindSvg(allDates);
+  const dailyGrindSvg = buildDailyGrindSvg(contribCounts);
   const buildingPublicSvg = buildPublicSvg(allRepos, publicCommitsTotal);
   const buildingPrivateSvg = buildPrivateSvg(privateDates.length, publicCommitsTotal);
   const telemetryPublicSvg = buildTelemetrySvg(publicDates, publicRepoRefs.length, PUBLIC_THEME);
