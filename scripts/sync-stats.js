@@ -221,10 +221,11 @@ function buildDailyGrindSvg(allDates) {
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
   <line x1="0" y1="44" x2="${W}" y2="44" stroke="#00ff66" stroke-width="0.6" opacity="0.55"/>
   <text x="20" y="28" fill="#00ff66" font-size="13" letter-spacing="2">// DAILY GRIND</text>
-  <circle cx="${W - 120}" cy="24" r="3" fill="#00ff66">
+  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">commits only · github counts more</text>
+  <circle cx="${W - 140}" cy="24" r="3" fill="#00ff66">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="${W - 20}" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · beat yesterday</text>`;
+  <text x="${W - 20}" y="28" fill="#00ff66" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · /15min · beat yesterday</text>`;
   y = 44;
 
   // Row 1: TODAY | YESTERDAY | DELTA
