@@ -8,7 +8,7 @@
 
 <table>
 <tr>
-<td valign="top" width="33%">
+<td valign="top" width="50%">
 
 <pre>
 ╔════════════════════════════════════╗
@@ -29,7 +29,7 @@
 </pre>
 
 </td>
-<td valign="top" width="33%">
+<td valign="top" width="50%">
 
 <pre>
 ╔════════════════════════════════════╗
@@ -50,27 +50,63 @@
 </pre>
 
 </td>
-<td valign="top" width="33%">
+</tr>
+</table>
+
+<br/>
+
+<table>
+<tr>
+<td valign="top" width="65%">
+
+<!-- PUBLIC_START -->
 
 <pre>
-╔════════════════════════════════════╗
-║  // ACTIVE BUILDS                  ║
-╠════════════════════════════════════╣
-║                                    ║
-║  >>  harness-maker                 ║
-║      [RUNNING]   javascript        ║
-║                                    ║
-║  >>  gigi                          ║
-║      [SHIPPING]  swift             ║
-║                                    ║
-║  >>  handcontrol                   ║
-║      [BUILDING]  typescript        ║
-║                                    ║
-║  ??  [REDACTED]                    ║
-║      [STEALTH]   ???               ║
-║                                    ║
-╚════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  // BUILDING IN PUBLIC                                                       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  >>  ArmandoBattaglino        javascript      ★ 0   ↻ 7m ago                 ║
+║  >>  HandControl              typescript      ★ 0   ↻ 2w ago                 ║
+║  >>  Harness-Maker            javascript      ★ 0   ↻ 1mo ago                ║
+║  >>  Data-Engineering-Ecomme… —               ★ 0   ↻ 1y ago                 ║
+║  >>  EPICODE                  c               ★ 0   ↻ 3y ago                 ║
+║  >>  Random-Combination       python          ★ 0   ↻ 3y ago                 ║
+║  >>  Pokedex                  css             ★ 0   ↻ 4y ago                 ║
+║  >>  Meteo-API                javascript      ★ 0   ↻ 4y ago                 ║
+║                                                                              ║
+║  8 public repos · 677 commits this year                                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
 </pre>
+
+<!-- PUBLIC_END -->
+
+</td>
+<td valign="top" width="35%">
+
+<!-- PRIVATE_START -->
+
+<pre>
+╔══════════════════════════════════════════╗
+║  // BUILDING IN PRIVATE                  ║
+╠══════════════════════════════════════════╣
+║                                          ║
+║                                          ║
+║         ███████████████░░░░░░░░░░░       ║
+║                                          ║
+║                   918                    ║
+║         commits this year                ║
+║                                          ║
+║               58% of total               ║
+║                                          ║
+║  what's brewing stays hidden             ║
+║  until it's ready to ship.               ║
+║                                          ║
+╚══════════════════════════════════════════╝
+</pre>
+
+<!-- PRIVATE_END -->
 
 </td>
 </tr>
@@ -124,12 +160,12 @@
 
 ### `// CHANNELS`
 
-| node | channel  | endpoint                                                                                   | clearance     |
-| ---- | -------- | ------------------------------------------------------------------------------------------ | ------------- |
-| `01` | github   | [github.com/ArmandoBattaglino](https://github.com/ArmandoBattaglino)                       | `[PUBLIC]`    |
+| node | channel  | endpoint                                                                                       | clearance     |
+| ---- | -------- | ---------------------------------------------------------------------------------------------- | ------------- |
+| `01` | github   | [github.com/ArmandoBattaglino](https://github.com/ArmandoBattaglino)                           | `[PUBLIC]`    |
 | `02` | linkedin | [linkedin.com/in/armando-battaglino](https://www.linkedin.com/in/armando-battaglino-7743ab295) | `[PUBLIC]`    |
-| `03` | email    | [efactorygroupsrl@gmail.com](mailto:efactorygroupsrl@gmail.com)                            | `[DM ONLY]`   |
-| `04` | signal   | _on request_                                                                               | `[PRIVATE]`   |
+| `03` | email    | [efactorygroupsrl@gmail.com](mailto:efactorygroupsrl@gmail.com)                                | `[DM ONLY]`   |
+| `04` | signal   | _on request_                                                                                   | `[PRIVATE]`   |
 
 <br/>
 <br/>
