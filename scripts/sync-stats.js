@@ -133,6 +133,9 @@ function shortDate(iso) {
 function buildDailyGrindSvg(counts) {
   const W = 880;
   const PAD = 36;
+  // Current local time as HH:MM for the "↻ updated" stamp
+  const nowLocal = new Date(Date.now() + TZ_MS);
+  const nowHM = `${String(nowLocal.getUTCHours()).padStart(2, '0')}:${String(nowLocal.getUTCMinutes()).padStart(2, '0')}`;
   // `counts` is a map { "YYYY-MM-DD": N } combining:
   //   - GitHub's public contributionCalendar (commits + PRs + issues + reviews on public repos)
   //   - Private commits enumerated repo-by-repo
@@ -219,10 +222,10 @@ function buildDailyGrindSvg(counts) {
   <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.55"/>
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// DAILY GRIND</text>
   <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">public contributions + private commits</text>
-  <circle cx="${W - 140}" cy="24" r="3" fill="#e6edf3">
+  <circle cx="${W - 200}" cy="24" r="3" fill="#e6edf3">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · /15min · beat yesterday</text>`;
+  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · ↻ ${nowHM} · /5min</text>`;
   y = 44;
 
   // Row 1: TODAY | YESTERDAY | DELTA
