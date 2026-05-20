@@ -1,78 +1,143 @@
 <div align="center">
 
-<img src="./assets/header.svg" alt="Armando Battaglino" width="100%" />
-
-</div>
-
-<br/>
-<br/>
-
-## I. &nbsp; origin
-
-> italian.  
-> i build small machines that listen.  
-> the good ones know when to disappear.  
-> the rest is a question pretending to be a tool.
-
-<br/>
-
-## II. &nbsp; opus
-
-> **harness-maker** &nbsp;—&nbsp; a frame for things that think on your behalf.  
-> **gigi** &nbsp;—&nbsp; a voice that doesn't phone home.  
-> **handcontrol** &nbsp;—&nbsp; touch the air. speak in the dark. nothing leaves the room.
-
-<br/>
-
-## III. &nbsp; instruments
-
-`typescript` &nbsp; `swift` &nbsp; `javascript` &nbsp; `python` &nbsp; `electron` &nbsp; `mediapipe` &nbsp; `whisper`
-
-<br/>
-
-## IV. &nbsp; traces
-
-<div align="center">
-
-<img src="./profile-3d-contrib/profile-gitblock.svg" alt="one year, in towers" width="100%" />
-
-<br/>
-
-<sub><i>one year. one tower per day. taller means louder.</i></sub>
+<img src="./assets/header.svg" alt="Armando Battaglino — Mission Control" width="100%" />
 
 </div>
 
 <br/>
 
-## V. &nbsp; pulse
+<table>
+<tr>
+<td valign="top" width="33%">
+
+<pre>
+╔════════════════════════════════════╗
+║  // SYSTEM                         ║
+╠════════════════════════════════════╣
+║                                    ║
+║  HOST      armando.battaglino      ║
+║  LOC       italy / rome            ║
+║  TZ        UTC+02                  ║
+║  KERNEL    darwin · win11          ║
+║  SHELL     zsh + powershell        ║
+║  EDITOR    vscode + xcode          ║
+║                                    ║
+║  STATUS    [+] ONLINE              ║
+║  MODE      [BUILDING]              ║
+║                                    ║
+╚════════════════════════════════════╝
+</pre>
+
+</td>
+<td valign="top" width="33%">
+
+<pre>
+╔════════════════════════════════════╗
+║  // MANIFESTO                      ║
+╠════════════════════════════════════╣
+║                                    ║
+║  01  offline by default            ║
+║  02  no telemetry. ever.           ║
+║  03  ship small, iterate often     ║
+║  04  the model != the product      ║
+║  05  italian first, english second ║
+║  06  worth doing badly first       ║
+║                                    ║
+║  > unsubscribed from the           ║
+║    hype cycle.                     ║
+║                                    ║
+╚════════════════════════════════════╝
+</pre>
+
+</td>
+<td valign="top" width="33%">
+
+<pre>
+╔════════════════════════════════════╗
+║  // ACTIVE BUILDS                  ║
+╠════════════════════════════════════╣
+║                                    ║
+║  >>  harness-maker                 ║
+║      [RUNNING]   javascript        ║
+║                                    ║
+║  >>  gigi                          ║
+║      [SHIPPING]  swift             ║
+║                                    ║
+║  >>  handcontrol                   ║
+║      [BUILDING]  typescript        ║
+║                                    ║
+║  ??  [REDACTED]                    ║
+║      [STEALTH]   ???               ║
+║                                    ║
+╚════════════════════════════════════╝
+</pre>
+
+</td>
+</tr>
+</table>
+
+<br/>
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=ArmandoBattaglino&show_icons=true&hide_border=true&bg_color=00000000&title_color=ffffff&text_color=c9d1d9&icon_color=ffffff&ring_color=ffffff&count_private=true&include_all_commits=true&hide_rank=true&hide=contribs" width="420" />
+<sub>// CONTRIBUTION TELEMETRY · last 365 sols · taller tower = louder day</sub>
+
+<img src="./profile-3d-contrib/profile-gitblock.svg" alt="contribution telemetry" width="100%" />
 
 </div>
 
 <br/>
 
-## VI. &nbsp; elsewhere
+<table>
+<tr>
+<td valign="top" width="58%">
 
-> if you find this page, you can find me too.  
->  
-> &nbsp; &nbsp; → &nbsp; [github](https://github.com/ArmandoBattaglino)  
-> &nbsp; &nbsp; → &nbsp; [linkedin](https://www.linkedin.com/in/armando-battaglino-7743ab295)  
-> &nbsp; &nbsp; → &nbsp; [a letter, if you must](mailto:efactorygroupsrl@gmail.com)
+<pre>
+╔══════════════════════════════════════════════════════════════╗
+║  // REFUSE_LIST                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  · anything that requires a login to read public info        ║
+║  · anything that calls home without telling you              ║
+║  · anything wrapping a chatgpt api as a "startup"            ║
+║  · anything treating "AI" as the feature                     ║
+║  · meetings that could have been a commit message            ║
+║  · frameworks that lock you in                               ║
+║                                                              ║
+║  > working software > "user-friendly" software               ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+</pre>
+
+</td>
+<td valign="top" width="42%" align="center">
 
 <br/>
+
+<img src="https://github-readme-stats.vercel.app/api?username=ArmandoBattaglino&show_icons=true&hide_border=true&bg_color=00000000&title_color=00ff66&text_color=c9d1d9&icon_color=00ff66&ring_color=00ff66&count_private=true&include_all_commits=true&hide_rank=true&hide=contribs" width="100%" />
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+### `// CHANNELS`
+
+| node | channel  | endpoint                                                                                   | clearance     |
+| ---- | -------- | ------------------------------------------------------------------------------------------ | ------------- |
+| `01` | github   | [github.com/ArmandoBattaglino](https://github.com/ArmandoBattaglino)                       | `[PUBLIC]`    |
+| `02` | linkedin | [linkedin.com/in/armando-battaglino](https://www.linkedin.com/in/armando-battaglino-7743ab295) | `[PUBLIC]`    |
+| `03` | email    | [efactorygroupsrl@gmail.com](mailto:efactorygroupsrl@gmail.com)                            | `[DM ONLY]`   |
+| `04` | signal   | _on request_                                                                               | `[PRIVATE]`   |
+
 <br/>
 <br/>
 
 <div align="center">
 
-<sub><i>—</i></sub>
+<sub>──────────────────────────────────────────────────────────</sub>
 
-<br/>
-<br/>
-
-<sub>the work is finished when no one notices.</sub>
+<sub><code>EOF // build 2026.05.20 · armando@workshop · the workshop never closes</code></sub>
 
 </div>
