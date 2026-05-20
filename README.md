@@ -55,10 +55,6 @@
 
 <br/>
 
-<table>
-<tr>
-<td valign="top" width="65%">
-
 <!-- PUBLIC_START -->
 
 <pre>
@@ -82,8 +78,9 @@
 
 <!-- PUBLIC_END -->
 
-</td>
-<td valign="top" width="35%">
+<br/>
+
+<div align="center">
 
 <!-- PRIVATE_START -->
 
@@ -108,9 +105,7 @@
 
 <!-- PRIVATE_END -->
 
-</td>
-</tr>
-</table>
+</div>
 
 <br/>
 
