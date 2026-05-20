@@ -24,6 +24,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
 
+      - name: Desaturate to pure B&W
+        run: |
+          for f in profile-3d-contrib/*.svg; do
+            node scripts/grayscale-svg.js "$f"
+          done
+
       - name: Commit & push 3D chart
         run: |
           git config user.name  "github-actions[bot]"
