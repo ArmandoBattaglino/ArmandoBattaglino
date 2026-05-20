@@ -18,21 +18,13 @@
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// BUILDING IN PRIVATE</text>
   <text x="460" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">[CLASSIFIED]</text>
 
-<<<<<<< Updated upstream
-  <text x="240" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">999</text>
-=======
   <text x="240" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">1,034</text>
->>>>>>> Stashed changes
   <text x="240" y="188" font-size="11" fill="#7d8590" text-anchor="middle" letter-spacing="2">COMMITS · LAST 365 DAYS</text>
 
   <text x="28" y="240" fill="#6e7681" font-size="10" letter-spacing="2">PRIVATE / TOTAL</text>
   <text x="452" y="240" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1">60%</text>
   <rect x="28" y="250" width="424" height="6" rx="3" fill="#161b22"/>
-<<<<<<< Updated upstream
-  <rect x="28" y="250" width="249" height="6" rx="3" fill="#e6edf3" opacity="0.85"/>
-=======
   <rect x="28" y="250" width="253" height="6" rx="3" fill="#e6edf3" opacity="0.85"/>
->>>>>>> Stashed changes
 
   <text x="240" y="310" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">what's brewing stays hidden</text>
   <text x="240" y="330" font-size="11" fill="#7d8590" text-anchor="middle" font-style="italic">until it's ready to ship.</text>
