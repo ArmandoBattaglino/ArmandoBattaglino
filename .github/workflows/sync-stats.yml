@@ -2,7 +2,7 @@ name: Sync Stats Panels
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
   push:
     branches:
@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/building-public.svg assets/building-private.svg assets/telemetry-public.svg assets/telemetry-private.svg
+          git add assets/daily-grind.svg assets/building-public.svg assets/building-private.svg assets/telemetry-public.svg assets/telemetry-private.svg
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

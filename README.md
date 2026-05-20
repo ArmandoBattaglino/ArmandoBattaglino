@@ -8,6 +8,14 @@
 
 <div align="center">
 
+<img src="./assets/daily-grind.svg" alt="Daily Grind — beat yesterday" width="100%" />
+
+</div>
+
+<br/>
+
+<div align="center">
+
 <img src="./assets/building-public.svg" alt="Building in public" width="100%" />
 
 </div>
