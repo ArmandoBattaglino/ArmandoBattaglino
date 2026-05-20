@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" fill="none">
+  <defs>
+    <!-- animated background gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0f1a">
+        <animate attributeName="stop-color" values="#0d0f1a;#1a1b3a;#1a1340;#0d0f1a" dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#1a1b26">
+        <animate attributeName="stop-color" values="#1a1b26;#24283b;#2a2050;#1a1b26" dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#0d0f1a">
+        <animate attributeName="stop-color" values="#0d0f1a;#1a1340;#1a1b3a;#0d0f1a" dur="14s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <!-- rainbow text gradient (animated stops) -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7aa2f7">
+        <animate attributeName="stop-color" values="#7aa2f7;#bb9af7;#f7768e;#7dcfff;#9ece6a;#7aa2f7" dur="9s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#bb9af7">
+        <animate attributeName="stop-color" values="#bb9af7;#f7768e;#7dcfff;#9ece6a;#7aa2f7;#bb9af7" dur="9s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#7dcfff">
+        <animate attributeName="stop-color" values="#7dcfff;#9ece6a;#7aa2f7;#bb9af7;#f7768e;#7dcfff" dur="9s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+
+    <!-- glow for main title -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- soft glow for accents -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- grid pattern -->
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#7aa2f7" stroke-width="0.4" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="340" fill="url(#bg)"/>
+  <rect width="1200" height="340" fill="url(#grid)"/>
+
+  <!-- Floating particles (different speeds, colors, sizes) -->
+  <g filter="url(#softGlow)">
+    <circle cx="80"   cy="70"  r="2.5" fill="#7aa2f7"><animate attributeName="cy" values="70;310;70" dur="11s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="11s" repeatCount="indefinite"/></circle>
+    <circle cx="180"  cy="50"  r="1.8" fill="#bb9af7"><animate attributeName="cy" values="50;300;50" dur="13s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="13s" repeatCount="indefinite"/></circle>
+    <circle cx="260"  cy="100" r="2.2" fill="#7dcfff"><animate attributeName="cy" values="100;320;100" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="9s" repeatCount="indefinite"/></circle>
+    <circle cx="350"  cy="40"  r="1.6" fill="#9ece6a"><animate attributeName="cy" values="40;290;40" dur="15s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="15s" repeatCount="indefinite"/></circle>
+    <circle cx="450"  cy="80"  r="2.4" fill="#f7768e"><animate attributeName="cy" values="80;310;80" dur="10s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="10s" repeatCount="indefinite"/></circle>
+    <circle cx="540"  cy="30"  r="1.9" fill="#7aa2f7"><animate attributeName="cy" values="30;280;30" dur="12s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="650"  cy="60"  r="2.1" fill="#bb9af7"><animate attributeName="cy" values="60;320;60" dur="14s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="14s" repeatCount="indefinite"/></circle>
+    <circle cx="740"  cy="90"  r="1.7" fill="#7dcfff"><animate attributeName="cy" values="90;310;90" dur="11s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="11s" repeatCount="indefinite"/></circle>
+    <circle cx="830"  cy="50"  r="2.3" fill="#9ece6a"><animate attributeName="cy" values="50;290;50" dur="13s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="13s" repeatCount="indefinite"/></circle>
+    <circle cx="920"  cy="70"  r="1.8" fill="#f7768e"><animate attributeName="cy" values="70;310;70" dur="10s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="10s" repeatCount="indefinite"/></circle>
+    <circle cx="1010" cy="40"  r="2.0" fill="#7aa2f7"><animate attributeName="cy" values="40;290;40" dur="12s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="1100" cy="85"  r="1.6" fill="#bb9af7"><animate attributeName="cy" values="85;320;85" dur="15s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="15s" repeatCount="indefinite"/></circle>
+    <circle cx="130"  cy="200" r="1.5" fill="#7dcfff"><animate attributeName="cx" values="130;1100;130" dur="22s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="22s" repeatCount="indefinite"/></circle>
+    <circle cx="220"  cy="260" r="1.8" fill="#9ece6a"><animate attributeName="cx" values="220;1180;220" dur="26s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="26s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Twinkling stars -->
+  <g fill="#c0caf5">
+    <circle cx="60"   cy="35"  r="1"><animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="200"  cy="20"  r="1"><animate attributeName="opacity" values="1;0.2;1" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="400"  cy="25"  r="1"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.2s" repeatCount="indefinite"/></circle>
+    <circle cx="600"  cy="15"  r="1"><animate attributeName="opacity" values="1;0.3;1" dur="2.8s" repeatCount="indefinite"/></circle>
+    <circle cx="800"  cy="30"  r="1"><animate attributeName="opacity" values="0.2;1;0.2" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="1000" cy="25"  r="1"><animate attributeName="opacity" values="1;0.2;1" dur="2.7s" repeatCount="indefinite"/></circle>
+    <circle cx="1150" cy="40"  r="1"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.1s" repeatCount="indefinite"/></circle>
+    <circle cx="50"   cy="280" r="1"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.9s" repeatCount="indefinite"/></circle>
+    <circle cx="1170" cy="310" r="1"><animate attributeName="opacity" values="1;0.3;1" dur="3.3s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Pulsing orbits behind title -->
+  <g opacity="0.18" fill="none" stroke="#7aa2f7" stroke-width="1">
+    <circle cx="600" cy="170" r="180"><animate attributeName="r" values="180;220;180" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.18;0.05;0.18" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="600" cy="170" r="230"><animate attributeName="r" values="230;280;230" dur="6s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.12;0.03;0.12" dur="6s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="600" cy="170" r="290"><animate attributeName="r" values="290;340;290" dur="6s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.08;0.02;0.08" dur="6s" begin="2s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Main title -->
+  <text x="600" y="175" font-family="Verdana, Geneva, sans-serif" font-size="68" font-weight="900"
+        fill="url(#textGrad)" text-anchor="middle" filter="url(#glow)" letter-spacing="2">
+    ARMANDO BATTAGLINO
+  </text>
+
+  <!-- Animated underline -->
+  <line x1="380" y1="200" x2="820" y2="200" stroke="url(#textGrad)" stroke-width="2" opacity="0.6">
+    <animate attributeName="x1" values="600;380;600" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="600;820;600" dur="5s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- Subtitle -->
+  <text x="600" y="240" font-family="Consolas, 'Courier New', monospace" font-size="18"
+        fill="#c0caf5" text-anchor="middle" opacity="0.85" letter-spacing="3">
+    BUILDER  ·  AI  TINKERER  ·  ITALY
+  </text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="285" font-family="Consolas, 'Courier New', monospace" font-size="14"
+        fill="#7aa2f7" text-anchor="middle" opacity="0.7">
+    &lt; shipping offline-first tools that respect your privacy /&gt;
+  </text>
+
+  <!-- Corner brackets -->
+  <g stroke="#7aa2f7" stroke-width="2" fill="none" opacity="0.5">
+    <path d="M 20 20 L 20 60 M 20 20 L 60 20"/>
+    <path d="M 1180 20 L 1180 60 M 1180 20 L 1140 20"/>
+    <path d="M 20 320 L 20 280 M 20 320 L 60 320"/>
+    <path d="M 1180 320 L 1180 280 M 1180 320 L 1140 320"/>
+  </g>
+</svg>

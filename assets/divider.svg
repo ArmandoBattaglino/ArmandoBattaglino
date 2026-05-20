@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="40" viewBox="0 0 1200 40" fill="none">
+  <defs>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a1b26" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#7aa2f7">
+        <animate attributeName="stop-color" values="#7aa2f7;#bb9af7;#7dcfff;#9ece6a;#f7768e;#7aa2f7" dur="8s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#1a1b26" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="lineGlow">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+  <line x1="0" y1="20" x2="1200" y2="20" stroke="url(#lineGrad)" stroke-width="2" filter="url(#lineGlow)"/>
+  <line x1="0" y1="20" x2="1200" y2="20" stroke="url(#lineGrad)" stroke-width="1"/>
+  <circle cx="600" cy="20" r="4" fill="#7aa2f7">
+    <animate attributeName="cx" values="0;1200;0" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#7aa2f7;#bb9af7;#7dcfff;#9ece6a;#f7768e;#7aa2f7" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="600" cy="20" r="2" fill="#c0caf5">
+    <animate attributeName="cx" values="1200;0;1200" dur="6s" repeatCount="indefinite"/>
+  </circle>
+</svg>
