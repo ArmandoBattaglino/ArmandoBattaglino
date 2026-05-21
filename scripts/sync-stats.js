@@ -668,7 +668,10 @@ async function fetchTodayNote() {
     );
     if (commentsRes.ok) {
       const comments = await commentsRes.json();
-      const ownComments = comments.filter((c) => c.user && c.user.login === USER);
+      // GitHub ignores direction=desc on issue comments — sort client-side
+      const ownComments = comments
+        .filter((c) => c.user && c.user.login === USER)
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       if (ownComments.length > 0) {
         const latest = ownComments[0];
         return { text: (latest.body || '').trim(), updatedAt: latest.created_at, source: 'comment' };
