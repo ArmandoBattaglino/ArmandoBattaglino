@@ -654,6 +654,114 @@ async function collectIssueAndPrDates(repoRefs, label) {
   return out;
 }
 
+// ─── TODAY'S NOTE (Issue #1 body) ─────────────────────────────────────────
+
+const NOTE_ISSUE_NUMBER = 1;
+
+async function fetchTodayNote() {
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${USER}/${USER}/issues/${NOTE_ISSUE_NUMBER}`,
+      { headers }
+    );
+    if (!res.ok) return { text: '', updatedAt: null };
+    const issue = await res.json();
+    return { text: (issue.body || '').trim(), updatedAt: issue.updated_at };
+  } catch (e) {
+    console.warn(`Could not fetch note issue: ${e.message}`);
+    return { text: '', updatedAt: null };
+  }
+}
+
+function wrapText(text, maxChars) {
+  // Naive word-wrap for the SVG (no native wrapping)
+  const lines = [];
+  for (const para of text.split('\n')) {
+    if (!para.trim()) {
+      lines.push('');
+      continue;
+    }
+    const words = para.split(/\s+/);
+    let current = '';
+    for (const word of words) {
+      if ((current + ' ' + word).trim().length > maxChars) {
+        if (current) lines.push(current.trim());
+        current = word;
+      } else {
+        current = current ? current + ' ' + word : word;
+      }
+    }
+    if (current) lines.push(current.trim());
+  }
+  return lines;
+}
+
+function buildTodayNoteSvg(note) {
+  const W = 880;
+  const PAD = 36;
+  const MAX_LINES = 4;
+  const MAX_CHARS = 78;
+  const text = note.text || '(no note set — edit issue #1)';
+  const lines = wrapText(text, MAX_CHARS).slice(0, MAX_LINES);
+  const updated = note.updatedAt ? humanize(new Date(note.updatedAt)) : '—';
+  const H = 80 + lines.length * 28 + 30;
+
+  const lineEls = lines
+    .map((l, i) => {
+      const y = 100 + i * 28;
+      const isFirst = i === 0;
+      return `<text x="${PAD + 8}" y="${y}" fill="${isFirst ? '#ffffff' : '#e6edf3'}" font-size="${isFirst ? 18 : 16}" font-style="italic">${escape(l) || '&#160;'}</text>`;
+    })
+    .join('\n  ');
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Courier New', 'SF Mono', Consolas, monospace">
+  <defs>
+    <pattern id="sl-note" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="1" fill="#ffffff" opacity="0.025"/>
+    </pattern>
+    <linearGradient id="hdr-note" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" rx="8" fill="#0d1117"/>
+  <rect width="${W}" height="${H}" rx="8" fill="url(#sl-note)"/>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="8" fill="none" stroke="#21262d" stroke-width="1"/>
+
+  <rect x="0" y="0" width="${W}" height="44" rx="8" fill="url(#hdr-note)"/>
+  <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
+  <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.35"/>
+  <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// TODAY'S NOTE</text>
+  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">edit issue #1 to update</text>
+  <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">↻ ${escape(updated)}</text>
+
+  <text x="${PAD}" y="84" fill="#6e7681" font-size="32" font-weight="700" opacity="0.4">&#8220;</text>
+  ${lineEls}
+  <text x="${W - PAD}" y="${100 + (lines.length - 1) * 28 + 14}" fill="#6e7681" font-size="32" font-weight="700" text-anchor="end" opacity="0.4">&#8221;</text>
+</svg>
+`;
+}
+
+// ─── Notes history (for future use) ────────────────────────────────────────
+
+function archiveNote(note, historyPath) {
+  if (!note.text || !note.updatedAt) return;
+  let history = [];
+  try {
+    history = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+  } catch (_) {
+    history = [];
+  }
+  const last = history[history.length - 1];
+  // Only archive if the text changed since the last entry
+  if (!last || last.text !== note.text) {
+    history.push({ text: note.text, at: note.updatedAt });
+    fs.mkdirSync(path.dirname(historyPath), { recursive: true });
+    fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+    console.log(`Archived new note (history now ${history.length} entries)`);
+  }
+}
+
 async function fetchContributionCalendar() {
   const data = await gql(`
     {
@@ -743,7 +851,13 @@ async function main() {
   let combinedTotal = 0;
   for (const v of Object.values(combinedCounts)) combinedTotal += v;
   console.log(`Combined daily total: ${combinedTotal} (public ${calTotal} + private commits ${privateDates.length} + private issues/prs ${privateIssuePrDates.length})`);
+  // Today's note from Issue #1
+  const note = await fetchTodayNote();
+  console.log(`Today's note: "${note.text.slice(0, 60)}${note.text.length > 60 ? '…' : ''}"`);
+  archiveNote(note, path.join('notes', 'history.json'));
+
   const dailyGrindSvg = buildDailyGrindSvg(combinedCounts);
+  const todayNoteSvg = buildTodayNoteSvg(note);
   const buildingPublicSvg = buildPublicSvg(allRepos, publicCommitsTotal);
   const buildingPrivateSvg = buildPrivateSvg(privateDates.length, publicCommitsTotal);
   const telemetryPublicSvg = buildTelemetrySvg(publicDates, publicRepoRefs.length, PUBLIC_THEME);
@@ -751,12 +865,13 @@ async function main() {
 
   fs.mkdirSync('assets', { recursive: true });
   fs.writeFileSync(path.join('assets', 'daily-grind.svg'), dailyGrindSvg);
+  fs.writeFileSync(path.join('assets', 'today-note.svg'), todayNoteSvg);
   fs.writeFileSync(path.join('assets', 'building-public.svg'), buildingPublicSvg);
   fs.writeFileSync(path.join('assets', 'building-private.svg'), buildingPrivateSvg);
   fs.writeFileSync(path.join('assets', 'telemetry-public.svg'), telemetryPublicSvg);
   fs.writeFileSync(path.join('assets', 'telemetry-private.svg'), telemetryPrivateSvg);
 
-  console.log('Wrote 5 SVGs to assets/');
+  console.log('Wrote 6 SVGs to assets/');
 }
 
 main().catch((e) => {

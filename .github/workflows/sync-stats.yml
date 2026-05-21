@@ -10,6 +10,9 @@ on:
   push:
     branches:
       - main
+  # Re-run instantly when the daily-note issue is edited
+  issues:
+    types: [opened, edited]
 
 permissions:
   contents: write
@@ -41,7 +44,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/daily-grind.svg assets/building-public.svg assets/building-private.svg assets/telemetry-public.svg assets/telemetry-private.svg
+          git add assets/daily-grind.svg assets/today-note.svg assets/building-public.svg assets/building-private.svg assets/telemetry-public.svg assets/telemetry-private.svg notes/history.json || true
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0

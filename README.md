@@ -16,6 +16,16 @@
 
 <div align="center">
 
+<a href="https://github.com/ArmandoBattaglino/ArmandoBattaglino/issues/1">
+  <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/today-note.svg" alt="Today's note — edit issue #1 to update" width="100%" />
+</a>
+
+</div>
+
+<br/>
+
+<div align="center">
+
 <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/building-public.svg" alt="Building in public" width="100%" />
 
 </div>
