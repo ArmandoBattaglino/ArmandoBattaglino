@@ -16,7 +16,7 @@
 
 <div align="center">
 
-<a href="https://github.com/ArmandoBattaglino/ArmandoBattaglino/issues/1#issuecomment-new">
+<a href="https://github.com/ArmandoBattaglino/ArmandoBattaglino/issues/1#new_comment_field">
   <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/today-note.svg" alt="Today's note — tap to add a new comment" width="100%" />
 </a>
 

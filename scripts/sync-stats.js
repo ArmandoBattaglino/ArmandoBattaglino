@@ -716,18 +716,29 @@ function buildTodayNoteSvg(note) {
   const PAD = 36;
   const MAX_LINES = 4;
   const MAX_CHARS = 78;
-  const text = note.text || '(no note set — edit issue #1)';
+  const hasNote = !!note.text;
+  const text = note.text || 'no note yet · tap [+ ADD A NOTE] below';
   const lines = wrapText(text, MAX_CHARS).slice(0, MAX_LINES);
-  const updated = note.updatedAt ? humanize(new Date(note.updatedAt)) : '—';
-  const H = 80 + lines.length * 28 + 30;
+  const updated = note.updatedAt ? humanize(new Date(note.updatedAt)) : 'never';
+  const sourceLabel = note.source === 'comment' ? 'from your latest comment' : note.source === 'body' ? 'from issue body' : '—';
+  const QUOTE_H = lines.length * 28;
+  const BTN_H = 56;
+  const H = 64 + 36 + QUOTE_H + 24 + BTN_H + 20;
 
   const lineEls = lines
     .map((l, i) => {
-      const y = 100 + i * 28;
+      const y = 110 + i * 28;
       const isFirst = i === 0;
-      return `<text x="${PAD + 8}" y="${y}" fill="${isFirst ? '#ffffff' : '#e6edf3'}" font-size="${isFirst ? 18 : 16}" font-style="italic">${escape(l) || '&#160;'}</text>`;
+      const color = hasNote ? (isFirst ? '#ffffff' : '#e6edf3') : '#6e7681';
+      return `<text x="${PAD + 16}" y="${y}" fill="${color}" font-size="${isFirst ? 18 : 16}" font-style="italic">${escape(l) || '&#160;'}</text>`;
     })
     .join('\n  ');
+
+  // Pseudo-button at the bottom
+  const btnY = 110 + QUOTE_H + 8;
+  const btnW = 280;
+  const btnX = (W - btnW) / 2;
+  const btnLabel = hasNote ? '[ + ] EDIT OR ADD A NEW NOTE' : '[ + ] TAP HERE TO ADD A NOTE';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Courier New', 'SF Mono', Consolas, monospace">
   <defs>
@@ -747,12 +758,17 @@ function buildTodayNoteSvg(note) {
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
   <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.35"/>
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// TODAY'S NOTE</text>
-  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">tap card → comment on issue → done</text>
+  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">${escape(sourceLabel)}</text>
   <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">↻ ${escape(updated)}</text>
 
-  <text x="${PAD}" y="84" fill="#6e7681" font-size="32" font-weight="700" opacity="0.4">&#8220;</text>
+  <text x="${PAD}" y="92" fill="#6e7681" font-size="32" font-weight="700" opacity="0.4">&#8220;</text>
   ${lineEls}
-  <text x="${W - PAD}" y="${100 + (lines.length - 1) * 28 + 14}" fill="#6e7681" font-size="32" font-weight="700" text-anchor="end" opacity="0.4">&#8221;</text>
+  <text x="${W - PAD}" y="${110 + (lines.length - 1) * 28 + 14}" fill="#6e7681" font-size="32" font-weight="700" text-anchor="end" opacity="0.4">&#8221;</text>
+
+  <line x1="${PAD}" y1="${btnY}" x2="${W - PAD}" y2="${btnY}" stroke="#21262d" stroke-width="0.5"/>
+
+  <rect x="${btnX}" y="${btnY + 16}" width="${btnW}" height="36" rx="6" fill="#161b22" stroke="#e6edf3" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="${btnX + btnW / 2}" y="${btnY + 39}" fill="#ffffff" font-size="11" text-anchor="middle" letter-spacing="2" font-weight="700">${btnLabel}</text>
 </svg>
 `;
 }
