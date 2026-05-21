@@ -1,12 +1,19 @@
 name: Sync Stats Panels
 
 on:
-  # Two parallel schedules with offset — GitHub deprioritizes high-frequency
-  # cron jobs under load, so doubling up gives better odds at least one fires.
+  # Five parallel schedules offset by 1 min — GitHub heavily deprioritizes
+  # high-frequency cron jobs under load. Combining 5 gives ~one trigger per
+  # minute and dramatically improves the odds at least one fires every 5 min.
   schedule:
     - cron: "*/5 * * * *"
+    - cron: "1-56/5 * * * *"
     - cron: "2-57/5 * * * *"
+    - cron: "3-58/5 * * * *"
+    - cron: "4-59/5 * * * *"
   workflow_dispatch:
+  # Allow external services (e.g., cron-job.org) to ping us via API
+  repository_dispatch:
+    types: [refresh]
   push:
     branches:
       - main
