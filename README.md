@@ -16,8 +16,8 @@
 
 <div align="center">
 
-<a href="https://github.com/ArmandoBattaglino/ArmandoBattaglino/issues/1">
-  <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/today-note.svg" alt="Today's note — edit issue #1 to update" width="100%" />
+<a href="https://github.com/ArmandoBattaglino/ArmandoBattaglino/issues/1#issuecomment-new">
+  <img src="https://raw.githubusercontent.com/ArmandoBattaglino/ArmandoBattaglino/main/assets/today-note.svg" alt="Today's note — tap to add a new comment" width="100%" />
 </a>
 
 </div>

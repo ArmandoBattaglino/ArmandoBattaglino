@@ -659,16 +659,31 @@ async function collectIssueAndPrDates(repoRefs, label) {
 const NOTE_ISSUE_NUMBER = 1;
 
 async function fetchTodayNote() {
+  // Latest comment by owner on issue #1 = today's note.
+  // Fallback to issue body if no comments yet.
   try {
-    const res = await fetch(
+    const commentsRes = await fetch(
+      `https://api.github.com/repos/${USER}/${USER}/issues/${NOTE_ISSUE_NUMBER}/comments?sort=created&direction=desc&per_page=100`,
+      { headers }
+    );
+    if (commentsRes.ok) {
+      const comments = await commentsRes.json();
+      const ownComments = comments.filter((c) => c.user && c.user.login === USER);
+      if (ownComments.length > 0) {
+        const latest = ownComments[0];
+        return { text: (latest.body || '').trim(), updatedAt: latest.created_at, source: 'comment' };
+      }
+    }
+    // Fallback to issue body
+    const issueRes = await fetch(
       `https://api.github.com/repos/${USER}/${USER}/issues/${NOTE_ISSUE_NUMBER}`,
       { headers }
     );
-    if (!res.ok) return { text: '', updatedAt: null };
-    const issue = await res.json();
-    return { text: (issue.body || '').trim(), updatedAt: issue.updated_at };
+    if (!issueRes.ok) return { text: '', updatedAt: null };
+    const issue = await issueRes.json();
+    return { text: (issue.body || '').trim(), updatedAt: issue.updated_at, source: 'body' };
   } catch (e) {
-    console.warn(`Could not fetch note issue: ${e.message}`);
+    console.warn(`Could not fetch note: ${e.message}`);
     return { text: '', updatedAt: null };
   }
 }
@@ -732,7 +747,7 @@ function buildTodayNoteSvg(note) {
   <rect x="0" y="38" width="${W}" height="6" fill="#0d1117"/>
   <line x1="0" y1="44" x2="${W}" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.35"/>
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// TODAY'S NOTE</text>
-  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">edit issue #1 to update</text>
+  <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">tap card → comment on issue → done</text>
   <text x="${W - 20}" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">↻ ${escape(updated)}</text>
 
   <text x="${PAD}" y="84" fill="#6e7681" font-size="32" font-weight="700" opacity="0.4">&#8220;</text>

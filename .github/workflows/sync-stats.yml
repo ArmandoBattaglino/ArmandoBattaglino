@@ -10,9 +10,11 @@ on:
   push:
     branches:
       - main
-  # Re-run instantly when the daily-note issue is edited
+  # Re-run instantly when the daily-note issue is edited or commented
   issues:
     types: [opened, edited]
+  issue_comment:
+    types: [created, edited, deleted]
 
 permissions:
   contents: write
