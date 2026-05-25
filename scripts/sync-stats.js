@@ -826,9 +826,12 @@ async function fetchContributionCalendar() {
 
 async function main() {
   const allRepos = await restAll(`/user/repos?affiliation=owner&sort=pushed&direction=desc`);
-  const privateRepos = allRepos.filter((r) => r.private && !r.fork);
 
-  // Use GraphQL to find ALL public repos the user committed to (incl. org repos like Building-addicts/GIGI)
+  // Use GraphQL as the source of truth for BOTH public and private repo refs.
+  // contributionsCollection.commitContributionsByRepository returns every repo
+  // the viewer committed to in the last year — including org-owned private
+  // repos like BuildingAddicts/working-suite — provided the token can see them.
+  // Token requirement: classic PAT with `repo` scope (so it reads org-private).
   const contribData = await gql(`
     query {
       viewer {
@@ -836,16 +839,24 @@ async function main() {
           totalCommitContributions
           commitContributionsByRepository(maxRepositories: 100) {
             repository { nameWithOwner isPrivate }
+            contributions { totalCount }
           }
         }
       }
     }
   `);
-  const publicCommitsTotal = contribData.viewer.contributionsCollection.totalCommitContributions;
-  const publicRepoRefs = contribData.viewer.contributionsCollection.commitContributionsByRepository
-    .filter((c) => !c.repository.isPrivate)
-    .map((c) => c.repository.nameWithOwner);
-  const privateRepoRefs = privateRepos.map((r) => `${USER}/${r.name}`);
+  const byRepo = contribData.viewer.contributionsCollection.commitContributionsByRepository;
+  const totalCommits = contribData.viewer.contributionsCollection.totalCommitContributions;
+
+  const publicRepoRefs = byRepo.filter((c) => !c.repository.isPrivate).map((c) => c.repository.nameWithOwner);
+  const privateRepoRefs = byRepo.filter((c) => c.repository.isPrivate).map((c) => c.repository.nameWithOwner);
+  const publicCommitsTotal = byRepo.filter((c) => !c.repository.isPrivate).reduce((s, c) => s + c.contributions.totalCount, 0);
+  const privateCommitsTotal = byRepo.filter((c) => c.repository.isPrivate).reduce((s, c) => s + c.contributions.totalCount, 0);
+
+  // Warn if GraphQL totals don't match the official figure (usually a token-scope gap)
+  if (publicCommitsTotal + privateCommitsTotal !== totalCommits) {
+    console.warn(`⚠ commit total mismatch — public ${publicCommitsTotal} + private ${privateCommitsTotal} != api ${totalCommits}. Token may be missing repo scope on some org.`);
+  }
 
   console.log('— Private commits —');
   const privateDates = await collectCommitDates(privateRepoRefs, 'private');
@@ -854,7 +865,7 @@ async function main() {
   console.log('— Private issues+PRs —');
   const privateIssuePrDates = await collectIssueAndPrDates(privateRepoRefs, 'private');
 
-  console.log(`\nSummary: public ${publicDates.length} (api total ${publicCommitsTotal}) · private commits ${privateDates.length} · private issues+prs ${privateIssuePrDates.length}`);
+  console.log(`\nSummary: public ${publicDates.length} (gql total ${publicCommitsTotal}) · private commits ${privateDates.length} (gql total ${privateCommitsTotal}) · private issues+prs ${privateIssuePrDates.length} · grand total ${totalCommits}`);
 
   const PUBLIC_THEME = {
     id: 'pub',
@@ -893,9 +904,9 @@ async function main() {
   const dailyGrindSvg = buildDailyGrindSvg(combinedCounts);
   const todayNoteSvg = buildTodayNoteSvg(note);
   const buildingPublicSvg = buildPublicSvg(allRepos, publicCommitsTotal);
-  const buildingPrivateSvg = buildPrivateSvg(privateDates.length, publicCommitsTotal);
+  const buildingPrivateSvg = buildPrivateSvg(privateCommitsTotal, publicCommitsTotal);
   const telemetryPublicSvg = buildTelemetrySvg(publicDates, publicRepoRefs.length, PUBLIC_THEME);
-  const telemetryPrivateSvg = buildTelemetrySvg(privateDates, privateRepos.length, PRIVATE_THEME);
+  const telemetryPrivateSvg = buildTelemetrySvg(privateDates, privateRepoRefs.length, PRIVATE_THEME);
 
   fs.mkdirSync('assets', { recursive: true });
   fs.writeFileSync(path.join('assets', 'daily-grind.svg'), dailyGrindSvg);
