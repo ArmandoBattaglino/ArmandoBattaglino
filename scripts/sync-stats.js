@@ -827,11 +827,8 @@ async function fetchContributionCalendar() {
 async function main() {
   const allRepos = await restAll(`/user/repos?affiliation=owner&sort=pushed&direction=desc`);
 
-  // Use GraphQL as the source of truth for BOTH public and private repo refs.
-  // contributionsCollection.commitContributionsByRepository returns every repo
-  // the viewer committed to in the last year — including org-owned private
-  // repos like BuildingAddicts/working-suite — provided the token can see them.
-  // Token requirement: classic PAT with `repo` scope (so it reads org-private).
+  // PUBLIC ref list: GraphQL is reliable for public contributions (no scope needed).
+  // Includes org-owned public repos like Building-addicts/GIGI.
   const contribData = await gql(`
     query {
       viewer {
@@ -849,13 +846,22 @@ async function main() {
   const totalCommits = contribData.viewer.contributionsCollection.totalCommitContributions;
 
   const publicRepoRefs = byRepo.filter((c) => !c.repository.isPrivate).map((c) => c.repository.nameWithOwner);
-  const privateRepoRefs = byRepo.filter((c) => c.repository.isPrivate).map((c) => c.repository.nameWithOwner);
   const publicCommitsTotal = byRepo.filter((c) => !c.repository.isPrivate).reduce((s, c) => s + c.contributions.totalCount, 0);
-  const privateCommitsTotal = byRepo.filter((c) => c.repository.isPrivate).reduce((s, c) => s + c.contributions.totalCount, 0);
 
-  // Warn if GraphQL totals don't match the official figure (usually a token-scope gap)
-  if (publicCommitsTotal + privateCommitsTotal !== totalCommits) {
-    console.warn(`⚠ commit total mismatch — public ${publicCommitsTotal} + private ${privateCommitsTotal} != api ${totalCommits}. Token may be missing repo scope on some org.`);
+  // PRIVATE ref list: GraphQL's commitContributionsByRepository returns 0 private repos
+  // unless the token has read:user scope — which PROFILE_TOKEN typically lacks.
+  // Fall back to REST /user/repos which works with plain `repo` scope and now also
+  // enumerates org-member private repos (the previous version used affiliation=owner
+  // only, which missed BuildingAddicts/working-suite et al).
+  const privateReposList = await restAll(
+    `/user/repos?affiliation=owner,collaborator,organization_member&visibility=private&sort=pushed&direction=desc`
+  );
+  const privateRepoRefs = privateReposList.filter((r) => !r.fork).map((r) => r.full_name);
+
+  // Warn if GraphQL aggregate doesn't match expected total — usually a token-scope gap
+  const gqlPrivateAgg = byRepo.filter((c) => c.repository.isPrivate).reduce((s, c) => s + c.contributions.totalCount, 0);
+  if (publicCommitsTotal + gqlPrivateAgg !== totalCommits) {
+    console.warn(`⚠ GraphQL view incomplete — public ${publicCommitsTotal} + gql-private ${gqlPrivateAgg} != api ${totalCommits}. Will use REST enumeration of ${privateRepoRefs.length} private repos.`);
   }
 
   console.log('— Private commits —');
@@ -865,7 +871,7 @@ async function main() {
   console.log('— Private issues+PRs —');
   const privateIssuePrDates = await collectIssueAndPrDates(privateRepoRefs, 'private');
 
-  console.log(`\nSummary: public ${publicDates.length} (gql total ${publicCommitsTotal}) · private commits ${privateDates.length} (gql total ${privateCommitsTotal}) · private issues+prs ${privateIssuePrDates.length} · grand total ${totalCommits}`);
+  console.log(`\nSummary: public ${publicDates.length} (gql total ${publicCommitsTotal}) · private commits ${privateDates.length} (REST enumeration · ${privateRepoRefs.length} repos) · private issues+prs ${privateIssuePrDates.length} · api grand total ${totalCommits}`);
 
   const PUBLIC_THEME = {
     id: 'pub',
@@ -904,7 +910,7 @@ async function main() {
   const dailyGrindSvg = buildDailyGrindSvg(combinedCounts);
   const todayNoteSvg = buildTodayNoteSvg(note);
   const buildingPublicSvg = buildPublicSvg(allRepos, publicCommitsTotal);
-  const buildingPrivateSvg = buildPrivateSvg(privateCommitsTotal, publicCommitsTotal);
+  const buildingPrivateSvg = buildPrivateSvg(privateDates.length, publicCommitsTotal);
   const telemetryPublicSvg = buildTelemetrySvg(publicDates, publicRepoRefs.length, PUBLIC_THEME);
   const telemetryPrivateSvg = buildTelemetrySvg(privateDates, privateRepoRefs.length, PRIVATE_THEME);
 
