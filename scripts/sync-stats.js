@@ -890,18 +890,13 @@ async function main() {
     tag: '[CLASSIFIED]',
   };
 
-  // Daily counts: GitHub's public contribution calendar (commits + PRs + issues + reviews)
-  // PLUS private commits + private issues/PRs we enumerate ourselves.
-  // Gets us the closest possible match to what shows on the user's own profile graph.
-  const { counts: calCounts, total: calTotal } = await fetchContributionCalendar();
-  const combinedCounts = { ...calCounts };
-  for (const d of [...privateDates, ...privateIssuePrDates]) {
-    const key = localDateKey(d);
-    combinedCounts[key] = (combinedCounts[key] || 0) + 1;
-  }
-  let combinedTotal = 0;
-  for (const v of Object.values(combinedCounts)) combinedTotal += v;
-  console.log(`Combined daily total: ${combinedTotal} (public ${calTotal} + private commits ${privateDates.length} + private issues/prs ${privateIssuePrDates.length})`);
+  // Daily counts come straight from GitHub's contributionCalendar — the same
+  // numbers as the green squares on the profile. The calendar ALREADY includes
+  // the viewer's private contributions when the "Include private contributions"
+  // setting is on, so we must NOT add privateDates/privateIssuePrDates on top
+  // (that was a double-count bug that ~2x'd the busiest days).
+  const { counts: combinedCounts, total: combinedTotal } = await fetchContributionCalendar();
+  console.log(`Daily calendar total: ${combinedTotal} (matches GitHub's green squares)`);
   // Today's note from Issue #1
   const note = await fetchTodayNote();
   console.log(`Today's note: "${note.text.slice(0, 60)}${note.text.length > 60 ? '…' : ''}"`);
