@@ -20,10 +20,10 @@
   <circle cx="680" cy="24" r="3" fill="#e6edf3">
     <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
   </circle>
-  <text x="860" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · ↻ 17:38 · /5min</text>
+  <text x="860" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">LIVE · CEST · ↻ 17:42 · /5min</text>
   
   <text x="36" y="80" fill="#6e7681" font-size="10" letter-spacing="2">TODAY</text>
-  <text x="36" y="126" fill="#ffffff" font-size="44" font-weight="700">8</text>
+  <text x="36" y="126" fill="#ffffff" font-size="44" font-weight="700">9</text>
   <text x="36" y="156" fill="#7d8590" font-size="10" letter-spacing="2">ACTIONS</text>
 
   <text x="305.3333333333333" y="80" fill="#6e7681" font-size="10" letter-spacing="2">YESTERDAY</text>
@@ -31,7 +31,7 @@
   <text x="305.3333333333333" y="156" fill="#7d8590" font-size="10" letter-spacing="2">ACTIONS</text>
 
   <text x="574.6666666666666" y="80" fill="#6e7681" font-size="10" letter-spacing="2">DELTA</text>
-  <text x="574.6666666666666" y="126" fill="#6e7681" font-size="36" font-weight="700">↓ -36 behind</text>
+  <text x="574.6666666666666" y="126" fill="#6e7681" font-size="36" font-weight="700">↓ -35 behind</text>
   <line x1="36" y1="180" x2="844" y2="180" stroke="#21262d" stroke-width="0.5"/>
   
   <text x="36" y="212" fill="#6e7681" font-size="10" letter-spacing="2">STREAK</text>
@@ -44,8 +44,8 @@
 
   <text x="574.6666666666666" y="212" fill="#6e7681" font-size="10" letter-spacing="2">TARGET TO BEAT</text>
   <rect x="574.6666666666666" y="242" width="237.33333333333331" height="8" rx="4" fill="#161b22"/>
-  <rect x="574.6666666666666" y="242" width="4.219259259259259" height="8" rx="4" fill="#e6edf3" opacity="0.9"/>
-  <text x="574.6666666666666" y="272" fill="#e6edf3" font-size="14" font-weight="700">8 / 450 = 2%</text>
+  <rect x="574.6666666666666" y="242" width="4.746666666666666" height="8" rx="4" fill="#e6edf3" opacity="0.9"/>
+  <text x="574.6666666666666" y="272" fill="#e6edf3" font-size="14" font-weight="700">9 / 450 = 2%</text>
   <line x1="36" y1="312" x2="844" y2="312" stroke="#21262d" stroke-width="0.5"/>
   
   <text x="36" y="340" fill="#6e7681" font-size="10" letter-spacing="2">LAST 90 DAYS · daily</text>
