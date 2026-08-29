@@ -17,7 +17,7 @@
   <line x1="0" y1="44" x2="880" y2="44" stroke="#e6edf3" stroke-width="0.6" opacity="0.35"/>
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// TODAY'S NOTE</text>
   <text x="180" y="28" fill="#6e7681" font-size="10" letter-spacing="1">from your latest comment</text>
-  <text x="860" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">↻ 2mo ago</text>
+  <text x="860" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">↻ 3mo ago</text>
 
   <text x="36" y="92" fill="#6e7681" font-size="32" font-weight="700" opacity="0.4">&#8220;</text>
   <text x="52" y="110" fill="#ffffff" font-size="18" font-style="italic">Human is the Bottleneck. The days after the 20 may i started managing people</text>
