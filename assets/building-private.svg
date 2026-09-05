@@ -18,7 +18,7 @@
   <text x="20" y="28" fill="#e6edf3" font-size="13" letter-spacing="2">// BUILDING IN PRIVATE</text>
   <text x="460" y="28" fill="#e6edf3" font-size="11" text-anchor="end" letter-spacing="1" opacity="0.75">[CLASSIFIED]</text>
 
-  <text x="240" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">3,346</text>
+  <text x="240" y="160" font-size="78" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="2">3,352</text>
   <text x="240" y="188" font-size="11" fill="#7d8590" text-anchor="middle" letter-spacing="2">COMMITS · LAST 365 DAYS</text>
 
   <text x="28" y="240" fill="#6e7681" font-size="10" letter-spacing="2">PRIVATE / TOTAL</text>
